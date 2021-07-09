@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,28 @@ namespace AplicacionWebProyecto3.Controllers
 {
     public class DoctorController : Controller
     {
+
+        public IConfiguration Configuration { get; set; }
+
+        public DoctorController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public IActionResult Index()
         {
-            //prueba jorge2
             return View();
-            //Prueba Bryan
+        }
+
+        public IActionResult RegistrarDoctor()
+        {
+            return View();
+        } 
+
+        [HttpPost]
+        public IActionResult RegistrarDoctor()
+        {
+
         }
     }
 }
