@@ -20,15 +20,10 @@ namespace AplicacionWebProyecto3.Controllers
             Configuration = configuration;
         }
 
-        public IActionResult Index()
+        public IActionResult Registrar()
         {
             return View();
         }
-
-        public IActionResult RegistrarDoctor()
-        {
-            return View();
-        } 
 
         [HttpPost]
         public IActionResult RegistrarDoctor(DoctorModel doctorModel)
