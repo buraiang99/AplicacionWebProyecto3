@@ -10,7 +10,7 @@ namespace AplicacionWebProyecto3.Controllers
     {
         public IActionResult Index()
         {
-            //prueba jorge
+            //prueba jorge2
             return View();
         }
     }
