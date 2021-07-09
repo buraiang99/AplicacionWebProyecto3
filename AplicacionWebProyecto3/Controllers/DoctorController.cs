@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AplicacionWebProyecto3.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,9 +30,9 @@ namespace AplicacionWebProyecto3.Controllers
         } 
 
         [HttpPost]
-        public IActionResult RegistrarDoctor()
+        public IActionResult RegistrarDoctor(DoctorModel doctorModel)
         {
-
+            return View();
         }
     }
 }
