@@ -12,6 +12,7 @@ namespace AplicacionWebProyecto3.Controllers
         {
             //prueba jorge2
             return View();
+            //Prueba Bryan
         }
     }
 }
