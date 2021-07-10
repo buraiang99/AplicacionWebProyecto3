@@ -11,16 +11,19 @@ namespace AplicacionWebProyecto3.Models
         public string CedulaPaciente { get; set; }
         public int CentroSalud { get; set; }
         public int EspecialidadRequerida { get; set; }
+        public string Fecha { get; set; }
         public CitasModel()
         {
 
         }//constructor vacio
-        public CitasModel(int iDCitas, string cedulaPaciente, int centroSalud, int especialidadRequerida)
+
+        public CitasModel(int iDCitas, string cedulaPaciente, int centroSalud, int especialidadRequerida, string fecha)
         {
             IDCitas = iDCitas;
             CedulaPaciente = cedulaPaciente;
             CentroSalud = centroSalud;
             EspecialidadRequerida = especialidadRequerida;
+            Fecha = fecha;
         }
     }//fin class
 }//fin namespace

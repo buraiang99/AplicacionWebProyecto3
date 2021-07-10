@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Registrar Cita";
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.Especialidad;
 }
 
 <h1>RegistrarCita</h1>
@@ -13,24 +14,17 @@
         <form asp-action="RegistrarCita">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IDCitas" class="control-label"></label>
-                <input asp-for="IDCitas" class="form-control" />
-                <span asp-validation-for="IDCitas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="CedulaPaciente" class="control-label"></label>
                 <input asp-for="CedulaPaciente" class="form-control" />
                 <span asp-validation-for="CedulaPaciente" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CentroSalud" class="control-label"></label>
-                <input asp-for="CentroSalud" class="form-control" />
-                <span asp-validation-for="CentroSalud" class="text-danger"></span>
+            <div>
+                @Html.DropDownList("listaEspecialidad", items, "Seleccione una opcion", new { @class="form-control"})
             </div>
             <div class="form-group">
-                <label asp-for="EspecialidadRequerida" class="control-label"></label>
-                <input asp-for="EspecialidadRequerida" class="form-control" />
-                <span asp-validation-for="EspecialidadRequerida" class="text-danger"></span>
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+                <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
