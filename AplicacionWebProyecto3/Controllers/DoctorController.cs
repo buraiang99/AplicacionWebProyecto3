@@ -26,11 +26,11 @@ namespace AplicacionWebProyecto3.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegistrarDoctor(DoctorModel doctorModel)
+        public IActionResult Registrar(DoctorModel doctorModel)
         {
             if (ModelState.IsValid)
             {
-                string conexionString = Configuration["ConnectionStrings:DB_Conection"];
+                string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
                 var connection = new SqlConnection(conexionString);
 
                 string sqlQuery = $"exec sp_insertarDoctor @param_CEDULA = '{doctorModel.Cedula}', " +
