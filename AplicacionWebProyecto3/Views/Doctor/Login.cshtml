@@ -1,0 +1,24 @@
+﻿@model AplicacionWebProyecto3.Models.DoctorModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form asp-action="Login" method="post">
+    <div class="row mx-4 mt-3">
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label text-light">Cedula</label>
+            <input asp-for="Cedula" type="text" class="form-control text-center" required id="Cedula" name="Cedula" placeholder="Cedula del doctor">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label text-light">Contraseña</label>
+            <input asp-for="Pass" type="password" class="form-control text-center" required id="Pass" name="Pass" placeholder="Contraseña del doctor">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label text-light">Codigo Doctor</label>
+            <input asp-for="CodigoMedico" type="text" class="form-control text-center" required id="CodigoMedico" name="CodigoMedico" placeholder="Codigo del doctor">
+        </div>
+    </div>
+    <div class="col-12 w-auto mx-3 text-center my-3">
+        <button type="submit" class="btn btn-primary text-center mt-3">Iniciar Sesion</button>
+    </div>
+</form>
