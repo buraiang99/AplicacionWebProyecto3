@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Registrar Cita";
-    List<SelectListItem> items = (List<SelectListItem>)ViewBag.Especialidad;
+    List<SelectListItem> Especialidaditems = (List<SelectListItem>)ViewBag.Especialidad;
     List<SelectListItem> areaSaludiItems = (List<SelectListItem>)ViewBag.AreaSalud;
 }
 
@@ -21,7 +21,7 @@
             </div>
             <div>
                 <label class="control-label">Especialidad</label>
-                @Html.DropDownList("listaEspecialidad", items, "Seleccione una opcion", new { @class = "form-control" })
+                @Html.DropDownList("listaEspecialidad", Especialidaditems, "Seleccione una opcion", new { @class = "form-control" })
             </div>
             <div>
                 <label class="control-label">Area de Salud</label>
