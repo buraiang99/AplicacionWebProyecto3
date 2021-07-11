@@ -1,0 +1,38 @@
+﻿@model AplicacionWebProyecto3.Models.VacunaModel
+
+@{
+    ViewData["Title"] = "Registrar Cita";
+    List<SelectListItem> items = (List<SelectListItem>)ViewBag.Especialidad;
+}
+
+<form asp-action="Registrar" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Cedula Paciente</label>
+            <input asp-for="CedulaPaciente" type="text" class="form-control text-center" required id="CedulaPaciente" name="CedulaPaciente" placeholder="Cedula del paciente">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Nombre</label>
+            <input asp-for="NombreVacuna" type="text" class="form-control text-center" required id="NombreVacuna" name="NombreVacuna" placeholder="Cedula del paciente">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Descripcion</label>
+            <input asp-for="Descripcion" type="text" class="form-control text-center" required id="Descripcion" name="Descripcion" placeholder="Descripcion de la vacuna">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label asp-for="FechaAplicacion" class="control-label"></label>
+            <input asp-for="FechaAplicacion" class="form-control" />
+            <span asp-validation-for="FechaAplicacion" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="FechaProxima" class="control-label"></label>
+            <input asp-for="FechaProxima" class="form-control" />
+            <span asp-validation-for="FechaProxima" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-12 w-auto mx-3 text-center my-3">
+        <button type="submit" class="btn btn-primary text-center mt-3">Registrar</button>
+    </div>
+</form>

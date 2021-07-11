@@ -5,16 +5,16 @@
 
 <form asp-action="Login" method="post">
     <div class="row mx-4 mt-3">
-        <div class="col-md-4">
-            <label for="inputEmail4" class="form-label text-light">Cedula</label>
+        <div class="col-md-4 text-center">
+            <label for="inputEmail4" class="form-label text">Cedula</label>
             <input asp-for="Cedula" type="text" class="form-control text-center" required id="Cedula" name="Cedula" placeholder="Cedula del doctor">
         </div>
-        <div class="col-md-4">
-            <label for="inputEmail4" class="form-label text-light">Contraseña</label>
+        <div class="col-md-4 text-center">
+            <label for="inputEmail4" class="form-label">Contraseña</label>
             <input asp-for="Pass" type="password" class="form-control text-center" required id="Pass" name="Pass" placeholder="Contraseña del doctor">
         </div>
-        <div class="col-md-4">
-            <label for="inputEmail4" class="form-label text-light">Codigo Doctor</label>
+        <div class="col-md-4 text-center">
+            <label for="inputEmail4" class="form-label">Codigo Doctor</label>
             <input asp-for="CodigoMedico" type="text" class="form-control text-center" required id="CodigoMedico" name="CodigoMedico" placeholder="Codigo del doctor">
         </div>
     </div>
