@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Registrar Cita";
     List<SelectListItem> items = (List<SelectListItem>)ViewBag.Especialidad;
+    List<SelectListItem> areaSaludiItems = (List<SelectListItem>)ViewBag.AreaSalud;
 }
 
 <h1>RegistrarCita</h1>
@@ -11,7 +12,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="RegistrarCita">
+        <form asp-action="RegistrarCita" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CedulaPaciente" class="control-label"></label>
@@ -19,12 +20,22 @@
                 <span asp-validation-for="CedulaPaciente" class="text-danger"></span>
             </div>
             <div>
-                @Html.DropDownList("listaEspecialidad", items, "Seleccione una opcion", new { @class="form-control"})
+                <label class="control-label">Especialidad</label>
+                @Html.DropDownList("listaEspecialidad", items, "Seleccione una opcion", new { @class = "form-control" })
+            </div>
+            <div>
+                <label class="control-label">Area de Salud</label>
+                @Html.DropDownList("listaAreaSalud", areaSaludiItems, "Seleccione una opcion", new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
                 <input asp-for="Fecha" class="form-control" />
                 <span asp-validation-for="Fecha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Hora" class="control-label"></label>
+                <input asp-for="Hora" class="form-control" />
+                <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
