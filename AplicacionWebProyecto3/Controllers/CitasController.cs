@@ -123,7 +123,7 @@ namespace AplicacionWebProyecto3.Controllers
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
                 var connection = new SqlConnection(conexionString);
 
-                var fechatemp = "2021-07-31 08:37:00";
+                var fechatemp = citasModel.Fecha+" "+citasModel.Hora;
 
                 Console.WriteLine(fechatemp);
                 string sqlQuery = $"exec sp_insertarCita @param_CEDULA_PACIENTE = '{citasModel.CedulaPaciente}'," +

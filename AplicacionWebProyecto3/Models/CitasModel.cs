@@ -24,7 +24,7 @@ namespace AplicacionWebProyecto3.Models
 
         [Required(ErrorMessage = "{0} es requerida")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-mm-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de la cita")]
         public string Fecha { get; set; }
 
