@@ -19,6 +19,18 @@
                     }
                 });
         }
+        function actualizarVacuna(idVacuna) {
+            var parametros = { "IDVacuna": idVacuna };
+            $.ajax(
+                {
+                    data: parametros,
+                    url: '/Vacuna/ActualizarVacuna',
+                    type: 'post',
+                    success: function (response) {
+                        $('#info').html(response);
+                    }
+                });
+        }
     </script>
 </head>
 <body>

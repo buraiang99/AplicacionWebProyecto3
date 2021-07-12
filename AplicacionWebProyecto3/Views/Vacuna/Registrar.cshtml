@@ -1,10 +1,5 @@
 ﻿@model AplicacionWebProyecto3.Models.VacunaModel
 
-@{
-    ViewData["Title"] = "Registrar Cita";
-    List<SelectListItem> items = (List<SelectListItem>)ViewBag.Especialidad;
-}
-
 <form asp-action="Registrar" method="post">
     <div class="row">
         <div class="col-md-4">
@@ -13,7 +8,7 @@
         </div>
         <div class="col-md-4">
             <label for="inputEmail4" class="form-label">Nombre</label>
-            <input asp-for="NombreVacuna" type="text" class="form-control text-center" required id="NombreVacuna" name="NombreVacuna" placeholder="Cedula del paciente">
+            <input asp-for="NombreVacuna" type="text" class="form-control text-center" required id="NombreVacuna" name="NombreVacuna" placeholder="Nombre de la Vacuna">
         </div>
         <div class="col-md-4">
             <label for="inputEmail4" class="form-label">Descripcion</label>

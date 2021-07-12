@@ -2,27 +2,33 @@
 @{
     ViewData["Title"] = "Ver Vacunas";
 }
-<table class="table table-light table-hover">
-    <tr>
-        <th>ID</th>
-        <th>Cedula paciente</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Aplicacion</th>
-        <th>Proxima</th>
-        <th>Eliminar</th>
-        <th>Actualizar</th>
-    </tr>
-    @foreach (VacunaModel temp in ViewBag.Vacunas)
-    {
-<tr>
-    <td>@temp.IDVacuna</td>
-    <td>@temp.CedulaPaciente</td>
-    <td>@temp.NombreVacuna</td>
-    <td>@temp.Descripcion</td>
-    <td>@temp.FechaAplicacion</td>
-    <td>@temp.FechaProxima</td>
-    <td><button type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;" class="btn btn-primary text-center mt-3">Eliminar</button></td>
-</tr>
-    }
-</table>
+<form asp-action="Update" method="post">
+    <div id="info" class="text-center">
+
+    </div>
+</form>
+    <table class="table table-light table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Cedula paciente</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Aplicacion</th>
+            <th>Proxima</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+        </tr>
+        @foreach (VacunaModel temp in ViewBag.Vacunas)
+        {
+            <tr>
+                <td>@temp.IDVacuna</td>
+                <td>@temp.CedulaPaciente</td>
+                <td>@temp.NombreVacuna</td>
+                <td>@temp.Descripcion</td>
+                <td>@temp.FechaAplicacion</td>
+                <td>@temp.FechaProxima</td>
+                <td><button type="button" href="javascript:;" onclick="actualizarVacuna(@temp.IDVacuna); return false;" class="btn btn-primary text-center mt-3">Actualizar</button></td>
+                <td><button type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;" class="btn btn-primary text-center mt-3">Eliminar</button></td>
+            </tr>
+        }
+    </table>
