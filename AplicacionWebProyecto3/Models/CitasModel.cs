@@ -8,18 +8,14 @@ namespace AplicacionWebProyecto3.Models
 {
     public class CitasModel
     {
+        public int ID_Citas { get; set; }
+
         [Required(ErrorMessage = "La {0} es requerido")]
         [DisplayFormat(DataFormatString = "{000000000}", ApplyFormatInEditMode = true)]
         [StringLength(9, ErrorMessage = "La {0} de tener al menos {2} digitos", MinimumLength = 9)]
         [Display(Name = "Cedula")]
         public string CedulaPaciente { get; set; }
-
-        [Required(ErrorMessage = "El {0} es requerido")]
-        [Display(Name = "Area de salud")]
         public int CentroSalud { get; set; }
-
-        [Required(ErrorMessage = "La {0} es requerida")]
-        [Display(Name = "Especialidad")]
         public int EspecialidadRequerida { get; set; }
 
         [Required(ErrorMessage = "{0} es requerida")]
@@ -33,17 +29,21 @@ namespace AplicacionWebProyecto3.Models
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
         [Display(Name = "Hora de la cita")]
         public string Hora { get; set; }
+        public string Descipcion { get; set; }
         public CitasModel()
         {
 
         }//constructor vaci
-        public CitasModel(string cedulaPaciente, int centroSalud, int especialidadRequerida, string fecha, string hora)
+
+        public CitasModel(int iD_Citas, string cedulaPaciente, int centroSalud, int especialidadRequerida, string fecha, string hora, string descipcion)
         {
+            ID_Citas = iD_Citas;
             CedulaPaciente = cedulaPaciente;
             CentroSalud = centroSalud;
             EspecialidadRequerida = especialidadRequerida;
             Fecha = fecha;
             Hora = hora;
+            Descipcion = descipcion;
         }
     }//fin class
 }//fin namespace
