@@ -28,13 +28,65 @@ namespace AplicacionWebProyecto3.Controllers
 
         public IActionResult RegistrarCita()
         {
+            List<EspecialidadModel> especialidadList = ListarEspecialidad();
+            List<SelectListItem> selectListItemsEspec = especialidadList.ConvertAll(especialidadModel =>
+            {
+                return new SelectListItem()
+                {
+                    Text = especialidadModel.Nombre.ToString(),
+                    Value = especialidadModel.ID_Especialidad.ToString(),
+                    Selected = false
+                };
+            });
 
-            ViewBag.AreaSalud = ItemsAreaSalud();
-            ViewBag.Especialidad = ItemsEspecialidad();
+            List<AreaSaludModel> areaSaludList = ListarAreaSalud();
+            List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
+            {
+                return new SelectListItem()
+                {
+                    Text = areaSalud.Nombre.ToString(),
+                    Value = areaSalud.ID.ToString(),
+                    Selected = false
+                };
+            });
+
+
+            ViewBag.AreaSalud = selectListItems;
+            ViewBag.Especialidad = selectListItemsEspec;
             return View();
-        }
+        }  // Fin RegistrarCita
 
-        private List<SelectListItem> ItemsAreaSalud()
+        [HttpPost]
+        public IActionResult RegistrarCita(CitasModel citasModel)
+        {
+            Console.WriteLine("Cedula: " + citasModel.CedulaPaciente);
+            Console.WriteLine(citasModel.Fecha + " " + citasModel.Hora);
+            Console.WriteLine("comboEspecialidad" + Request.Form["listaEspecialidad"].ToString());
+            Console.WriteLine("comboArea" + Request.Form["listaAreaSalud"].ToString());
+            if (ModelState.IsValid)
+            {
+                string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+                var connection = new SqlConnection(conexionString);
+
+                var fechatemp = citasModel.Fecha + " " + citasModel.Hora;
+
+                Console.WriteLine(fechatemp);
+                string sqlQuery = $"exec sp_insertarCita @param_CEDULA_PACIENTE = '{citasModel.CedulaPaciente}'," +
+                    $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaAreaSalud"].ToString())}', " +
+                    $"@param_FECHA_HORA_CITA = '{fechatemp}'," +
+                    $"@param_ESPECIALIDAD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteReader();
+                    connection.Close();
+                };
+
+            }
+            return View("Index");
+        }// fin RegistrarCita
+        private List<AreaSaludModel> ListarAreaSalud()
         {
             List<AreaSaludModel> areaSaludList = new List<AreaSaludModel>();
             if (ModelState.IsValid)
@@ -59,20 +111,11 @@ namespace AplicacionWebProyecto3.Controllers
                         connection.Close();
                     }
                 }
-                List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
-                {
-                    return new SelectListItem()
-                    {
-                        Text = areaSalud.Nombre.ToString(),
-                        Value = areaSalud.ID.ToString(),
-                        Selected = false
-                    };
-                });
-                return selectListItems;
+                return areaSaludList;
             }
             return null;
         }
-        private List<SelectListItem> ItemsEspecialidad()
+        private List<EspecialidadModel> ListarEspecialidad()
         {
             List<EspecialidadModel> especialidadList = new List<EspecialidadModel>();
             if (ModelState.IsValid)
@@ -97,48 +140,47 @@ namespace AplicacionWebProyecto3.Controllers
                         connection.Close();
                     }
                 }
-                List<SelectListItem> selectListItems = especialidadList.ConvertAll(especialidadModel =>
-                {
-                    return new SelectListItem()
-                    {
-                        Text = especialidadModel.Nombre.ToString(),
-                        Value = especialidadModel.ID_Especialidad.ToString(),
-                        Selected = false
-                    };
-                });
-                 return selectListItems;
+                 return especialidadList;
             }
-            return null;
-        }
+            return especialidadList;
+        }// Fin ItemsEspecialidad
 
-        [HttpPost]
-        public IActionResult RegistrarCita(CitasModel citasModel)
+        public IActionResult Listar()
         {
-            Console.WriteLine("Cedula: "+citasModel.CedulaPaciente);
-            Console.WriteLine(citasModel.Fecha+" "+citasModel.Hora);
-            Console.WriteLine("comboEspecialidad" + Request.Form["listaEspecialidad"].ToString());
-            Console.WriteLine("comboArea" + Request.Form["listaAreaSalud"].ToString());
+            List<CitasModel> listaCitas = new List<CitasModel>();
             if (ModelState.IsValid)
             {
-                string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-                var connection = new SqlConnection(conexionString);
+                string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
 
-                var fechatemp = citasModel.Fecha+" "+citasModel.Hora;
-
-                Console.WriteLine(fechatemp);
-                string sqlQuery = $"exec sp_insertarCita @param_CEDULA_PACIENTE = '{citasModel.CedulaPaciente}'," +
-                    $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaAreaSalud"].ToString())}', " +
-                    $"@param_FECHA_HORA_CITA = '{fechatemp}'," +
-                    $"@param_ESPECIALIDAD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'";
-                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    command.CommandType = CommandType.Text;
-                    connection.Open();
-                    command.ExecuteReader();
-                    connection.Close();
-                };
+                    string sqlQuery = $"exec sp_getAllCitas";
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader sqlDataReader = command.ExecuteReader();
+                        while (sqlDataReader.Read())
+                        {
+                            CitasModel citas = new CitasModel();
+                            citas.ID_Citas = Int32.Parse(sqlDataReader["ID"].ToString());
+                            citas.CedulaPaciente = sqlDataReader["CEDULA_PACIENTE"].ToString();
+                            citas.Fecha = sqlDataReader["FECHA"].ToString();
+                            //Console.WriteLine("----------------"+sqlDataReader["FECHA"].ToString());
+                            citas.Hora = sqlDataReader["HORA"].ToString();
+                            citas.CentroSalud = Int32.Parse(sqlDataReader["ID_CENTRO_SALUD"].ToString());
+                            citas.EspecialidadRequerida = Int32.Parse(sqlDataReader["ESPECIALIDAD"].ToString());
+                            citas.Descipcion = sqlDataReader["DESCRIPCION_DETALLADA"].ToString();
+                            listaCitas.Add(citas);
+                        }
+                    }
+                }
+
             }
-            return View("Index");
+            ViewBag.Especialidades = ListarEspecialidad();
+            ViewBag.AreasSalud = ListarAreaSalud();
+            ViewBag.Citas = listaCitas;
+            return View();
         }
     }
 }

@@ -27,9 +27,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Doctor" asp-action="Login">Iniciar Sesion</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Citas" asp-action="RegistrarCita">Registrar Cita</a>
-                        </li>
+                        <li class="dropdown nav-item">
+                            <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" href="#">Citas</a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="nav-link text-dark dropdown-item" asp-area="" asp-controller="Citas" asp-action="RegistrarCita">Registrar Cita</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-dark dropdown-item" asp-area="" asp-controller="Citas" asp-action="Listar">Listar</a>
+                                </li>
+                            </ul>
+                        </li>  
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="Registrar">Registrar Vacuna</a>
                         </li>

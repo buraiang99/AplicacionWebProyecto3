@@ -1,0 +1,82 @@
+﻿@model IEnumerable<AplicacionWebProyecto3.Models.CitasModel>
+
+@{
+    ViewData["Title"] = "Listar";
+}
+
+<h1>Listar</h1>
+
+<p>
+    <a asp-controller="Citas" asp-action="RegistrarCita">Registrar nueva cita</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Citas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CedulaPaciente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CentroSalud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EspecialidadRequerida)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hora)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descipcion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (CitasModel item in ViewBag.Citas) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Citas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CedulaPaciente)
+            </td>
+            <td>
+                @foreach (AreaSaludModel areaSalud in ViewBag.AreasSalud)
+                {
+                    if (areaSalud.ID == item.CentroSalud)
+                    {
+                        @Html.DisplayFor(modelItem => areaSalud.Nombre)
+                    }
+                }
+            </td>
+            <td>
+                @foreach (EspecialidadModel especialidad in ViewBag.Especialidades)
+                {
+                    if (especialidad.ID_Especialidad == item.EspecialidadRequerida)
+                    {
+                        @Html.DisplayFor(modelItem => especialidad.Nombre)
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descipcion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Eliminar", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
