@@ -15,8 +15,7 @@
             <th>Descripcion</th>
             <th>Aplicacion</th>
             <th>Proxima</th>
-            <th>Actualizar</th>
-            <th>Eliminar</th>
+            <th>Acciones</th>
         </tr>
         @foreach (VacunaModel temp in ViewBag.Vacunas)
         {
@@ -27,8 +26,9 @@
                 <td>@temp.Descripcion</td>
                 <td>@temp.FechaAplicacion</td>
                 <td>@temp.FechaProxima</td>
-                <td><button type="button" href="javascript:;" onclick="actualizarVacuna(@temp.IDVacuna); return false;" class="btn btn-primary text-center mt-3">Actualizar</button></td>
-                <td><button type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;" class="btn btn-primary text-center mt-3">Eliminar</button></td>
+                <td><a type="button" href="javascript:;" onclick="actualizarVacuna(@temp.IDVacuna); return false;">Actualizar</a>
+                |
+                <a type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;">Eliminar</a></td>
             </tr>
         }
     </table>
