@@ -6,6 +6,20 @@
     <title>@ViewData["Title"] - Expediente de Salud Digital</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script>
+        function eliminarVacuna(idVacuna) {
+            var parametros = { "IDVacuna": idVacuna };
+            $.ajax(
+                {
+                    data: parametros,
+                    url: '/Vacuna/EliminarVacuna',
+                    type: 'post',
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -40,6 +54,9 @@
                         </li>  
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="Registrar">Registrar Vacuna</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="VerVacunas">Vacunas</a>
                         </li>
                     </ul>
                 </div>
