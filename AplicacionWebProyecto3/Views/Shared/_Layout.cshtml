@@ -31,6 +31,30 @@
                     }
                 });
         }
+        function actualizarAlergia(idAlergia) {
+            var parametros = { "IDAlergia": idAlergia };
+            $.ajax(
+                {
+                    data: parametros,
+                    url: '/Alergia/ActualizarAlergia',
+                    type: 'post',
+                    success: function (response) {
+                        $('#info').html(response);
+                    }
+                });
+        }
+        function eliminarAlergia(idAlergia) {
+            var parametros = { "IDAlergia": idAlergia };
+            $.ajax(
+                {
+                    data: parametros,
+                    url: '/Alergia/EliminarAlergia',
+                    type: 'post',
+                    success: function (response) {
+                        location.reload();
+                    }
+                });
+        }
     </script>
 </head>
 <body>
@@ -57,7 +81,7 @@
                             <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" href="#">Citas</a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="nav-link text-dark dropdown-item" asp-area="" asp-controller="Citas" asp-action="RegistrarCita">Registrar Cita</a>
+                                    <a class="nav-link text-dark dropdown-item" asp-area="" asp-controller="Citas" asp-action="RegistrarCita">Registrar</a>
                                 </li>
                                 <li>
                                     <a class="nav-link text-dark dropdown-item" asp-area="" asp-controller="Citas" asp-action="Listar">Listar</a>
@@ -68,10 +92,21 @@
                             <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" href="#">Vacunas</a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="Registrar">Registrar Vacuna</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="Registrar">Registrar</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="VerVacunas">Vacunas</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Vacuna" asp-action="VerVacunas">Listar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown nav-item">
+                            <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" href="#">Alergias</a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Alergia" asp-action="Registrar">Registrar</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Alergia" asp-action="VerAlergias">Listar</a>
                                 </li>
                             </ul>
                         </li>
