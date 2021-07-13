@@ -1,0 +1,32 @@
+﻿@model AplicacionWebProyecto3.Models.AlergiaModel
+
+<form asp-action="Registrar" method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Cedula Paciente</label>
+            <input asp-for="CedulaPaciente" type="text" class="form-control text-center" required id="CedulaPaciente" name="CedulaPaciente" placeholder="Cedula del paciente">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Nombre</label>
+            <input asp-for="NombreAlergia" type="text" class="form-control text-center" required id="NombreAlergia" name="NombreAlergia" placeholder="Nombre de la Alergia">
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail4" class="form-label">Descripcion</label>
+            <input asp-for="Descripcion" type="text" class="form-control text-center" required id="Descripcion" name="Descripcion" placeholder="Descripcion de la alergia">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label asp-for="FechaDiagnostico" class="control-label"></label>
+            <input asp-for="FechaDiagnostico" class="form-control" />
+            <span asp-validation-for="FechaDiagnostico" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputEmail4" class="form-label">Medicamentos</label>
+            <input asp-for="Medicamentos" type="text" class="form-control text-center" required id="Medicamentos" name="Medicamentos" placeholder="Medicamentos para la alergia">
+        </div>
+    </div>
+    <div class="col-12 w-auto mx-3 text-center my-3">
+        <button type="submit" class="btn btn-primary text-center mt-3">Registrar</button>
+    </div>
+</form>
