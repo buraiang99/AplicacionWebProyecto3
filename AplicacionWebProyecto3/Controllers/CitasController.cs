@@ -229,8 +229,24 @@ namespace AplicacionWebProyecto3.Controllers
         [HttpPost]
         public IActionResult Actualizar(CitasModel citasModel)
         {
-            Console.WriteLine("-------------------ID"+citasModel.ID_Citas);
-            return Listar();
+            //Console.WriteLine("-------------------ID: "+citasModel.ID_Citas);
+            //Console.WriteLine("-------------------Descipcion: " + citasModel.Descipcion);
+            if (ModelState.IsValid)
+            {
+                string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+                var connection = new SqlConnection(conexionString);
+
+                string sqlQuery = $"exec sp_updateDiagnostico @param_ID_CITA = '{citasModel.ID_Citas}', " +
+                    $"@param_DESCRIPCION_DETALLADA = '{citasModel.Descipcion}'";
+                using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    connection.Open();
+                    command.ExecuteReader();
+                    connection.Close();
+                };
+            }
+            return View("Index");
         }// fin Actualizar
 
         public IActionResult Eliminar(int id)
