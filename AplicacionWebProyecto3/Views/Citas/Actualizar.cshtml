@@ -1,0 +1,55 @@
+﻿@model AplicacionWebProyecto3.Models.CitasModel
+
+@{
+    ViewData["Title"] = "Actualizar";
+}
+
+<h1>Actualizar Cita</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Actualizar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID_Citas" class="control-label">@Html.DisplayNameFor(citasModel => citasModel.ID_Citas)</label>
+                <input asp-for="ID_Citas" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CedulaPaciente" class="control-label">Cedula del paciente</label>
+                <input asp-for="CedulaPaciente" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CentroSalud" class="control-label">Centro de salud</label>
+                <input asp-for="CentroSalud" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EspecialidadRequerida" class="control-label">Especialidad</label>
+                <input asp-for="EspecialidadRequerida" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Fecha" class="control-label"></label>
+                <input asp-for="Fecha" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Hora" class="control-label"></label>
+                <input asp-for="Hora" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Descipcion" class="control-label">Diagnostico</label>
+                <input asp-for="Descipcion" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Listar">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
