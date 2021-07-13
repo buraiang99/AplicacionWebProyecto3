@@ -73,7 +73,7 @@
                 @Html.DisplayFor(modelItem => item.Descipcion)
             </td>
             <td>
-                <a asp-controller="Citas" asp-action="BucarCita" asp-route-id="@item.ID_Citas" class="text-dark">Editar Diagnostico</a>
+                <a asp-controller="Citas" asp-action="BuscarCita" asp-route-id="@item.ID_Citas">Editar Diagnostico</a>
                 @Html.ActionLink("Eliminar Cita", "Eliminar", new { id=item.ID_Citas })
             </td>
         </tr>

@@ -12,32 +12,32 @@
         <form asp-action="Actualizar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ID_Citas" class="control-label">@Html.DisplayNameFor(citasModel => citasModel.ID_Citas)</label>
-                <input asp-for="ID_Citas" class="form-control" />
+                <label asp-for="ID_Citas" class="control-label"></label>
+                <input asp-for="ID_Citas" class="form-control" disabled />
             </div>
             <div class="form-group">
                 <label asp-for="CedulaPaciente" class="control-label">Cedula del paciente</label>
-                <input asp-for="CedulaPaciente" class="form-control" />
+                <input asp-for="CedulaPaciente" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="CentroSalud" class="control-label">Centro de salud</label>
-                <input asp-for="CentroSalud" class="form-control" />
+                <input asp-for="CentroSalud" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="EspecialidadRequerida" class="control-label">Especialidad</label>
-                <input asp-for="EspecialidadRequerida" class="form-control" />
+                <input asp-for="EspecialidadRequerida" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
+                <input asp-for="Fecha" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="Hora" class="control-label"></label>
-                <input asp-for="Hora" class="form-control" />
+                <input asp-for="Hora" class="form-control" disabled/>
             </div>
             <div class="form-group">
                 <label asp-for="Descipcion" class="control-label">Diagnostico</label>
-                <input asp-for="Descipcion" class="form-control" />
+                <textarea asp-for="Descipcion" class="form-control"></textarea>
             </div>
             <div class="form-group">
                 <input type="submit" value="Actualizar" class="btn btn-primary" />

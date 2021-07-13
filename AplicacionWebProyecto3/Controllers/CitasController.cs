@@ -184,9 +184,9 @@ namespace AplicacionWebProyecto3.Controllers
 
         [HttpGet]
         [Route("controller/accion/{id}")]
-        public IActionResult BucarCita(int id)
+        public IActionResult BuscarCita(int id)
         {
-
+            //Console.WriteLine("---------------------"+id);
             CitasModel citasModel = new CitasModel();
             if (ModelState.IsValid)
             {
@@ -222,12 +222,14 @@ namespace AplicacionWebProyecto3.Controllers
             ViewBag.Especialidades = ListarEspecialidad();
             ViewBag.AreasSalud = ListarAreaSalud();
             ViewBag.Cita = citasModel;
-            return View();
+            //Console.WriteLine("----------------------------"+citasModel.Fecha);
+            return View("Actualizar", citasModel);
         }// fin Actualizar
 
-        public IActionResult Actualizar(int id)
+        [HttpPost]
+        public IActionResult Actualizar(CitasModel citasModel)
         {
-            //Console.WriteLine("ID"+id);
+            Console.WriteLine("-------------------ID"+citasModel.ID_Citas);
             return Listar();
         }// fin Actualizar
 
