@@ -144,7 +144,6 @@ namespace AplicacionWebProyecto3.Controllers
             }
             return especialidadList;
         }// Fin ItemsEspecialidad
-
         public IActionResult Listar()
         {
             List<CitasModel> listaCitas = new List<CitasModel>();
@@ -181,6 +180,72 @@ namespace AplicacionWebProyecto3.Controllers
             ViewBag.AreasSalud = ListarAreaSalud();
             ViewBag.Citas = listaCitas;
             return View();
+        }
+
+        [HttpGet]
+        [Route("controller/accion/{id}")]
+        public IActionResult BucarCita(int id)
+        {
+
+            CitasModel citasModel = new CitasModel();
+            if (ModelState.IsValid)
+            {
+                string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sqlQuery = $"exec sp_getCita @param_ID = {id}";
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader sqlDataReader = command.ExecuteReader();
+                        CitasModel citas = new CitasModel();
+                        if (sqlDataReader.Read())
+                        {                            
+                            citas.ID_Citas = Int32.Parse(sqlDataReader["ID"].ToString());
+                            citas.CedulaPaciente = sqlDataReader["CEDULA_PACIENTE"].ToString();
+                            citas.Fecha = sqlDataReader["FECHA"].ToString();
+                            //Console.WriteLine("----------------"+sqlDataReader["FECHA"].ToString());
+                            citas.Hora = sqlDataReader["HORA"].ToString();
+                            citas.CentroSalud = Int32.Parse(sqlDataReader["ID_CENTRO_SALUD"].ToString());
+                            citas.EspecialidadRequerida = Int32.Parse(sqlDataReader["ESPECIALIDAD"].ToString());
+                            citas.Descipcion = sqlDataReader["DESCRIPCION_DETALLADA"].ToString();
+
+                            citasModel = citas;
+                        }
+                    }
+                }
+
+            }
+
+            ViewBag.Especialidades = ListarEspecialidad();
+            ViewBag.AreasSalud = ListarAreaSalud();
+            ViewBag.Cita = citasModel;
+            return View();
+        }// fin Actualizar
+
+        public IActionResult Actualizar(int id)
+        {
+            //Console.WriteLine("ID"+id);
+            return Listar();
+        }// fin Actualizar
+
+        public IActionResult Eliminar(int id)
+        {
+            //Console.WriteLine(id);
+            string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+            var connection = new SqlConnection(conexionString);
+
+            string sqlQuery = $"exec sp_eliminarCita @param_IDCita = '{id}'";
+            using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+            {
+                command.CommandType = CommandType.Text;
+                connection.Open();
+                command.ExecuteReader();
+                connection.Close();
+            };
+            return View("Index");
         }
     }
 }
