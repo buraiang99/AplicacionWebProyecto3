@@ -59,10 +59,11 @@ namespace AplicacionWebProyecto3.Controllers
         [HttpPost]
         public IActionResult RegistrarCita(CitasModel citasModel)
         {
-            Console.WriteLine("Cedula: " + citasModel.CedulaPaciente);
+            /*Console.WriteLine("Cedula: " + citasModel.CedulaPaciente);
             Console.WriteLine(citasModel.Fecha + " " + citasModel.Hora);
             Console.WriteLine("comboEspecialidad" + Request.Form["listaEspecialidad"].ToString());
             Console.WriteLine("comboArea" + Request.Form["listaAreaSalud"].ToString());
+            Console.WriteLine("Sesion: "+ HttpContext.Session.GetString("Cedula"));*/
             if (ModelState.IsValid)
             {
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
@@ -70,11 +71,12 @@ namespace AplicacionWebProyecto3.Controllers
 
                 var fechatemp = citasModel.Fecha + " " + citasModel.Hora;
 
-                Console.WriteLine(fechatemp);
+                //Console.WriteLine(fechatemp);
                 string sqlQuery = $"exec sp_insertarCita @param_CEDULA_PACIENTE = '{citasModel.CedulaPaciente}'," +
                     $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaAreaSalud"].ToString())}', " +
                     $"@param_FECHA_HORA_CITA = '{fechatemp}'," +
-                    $"@param_ESPECIALIDAD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'";
+                    $"@param_ESPECIALIDAD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'," +
+                    $"@param_CedulaDoctor = '{HttpContext.Session.GetString("Cedula")}'";
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = CommandType.Text;
