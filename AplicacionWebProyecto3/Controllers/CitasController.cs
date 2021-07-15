@@ -174,6 +174,7 @@ namespace AplicacionWebProyecto3.Controllers
                             citas.Descipcion = sqlDataReader["DESCRIPCION_DETALLADA"].ToString();
                             listaCitas.Add(citas);
                         }
+                        connection.Close();
                     }
                 }
 
@@ -216,6 +217,7 @@ namespace AplicacionWebProyecto3.Controllers
 
                             citasModel = citas;
                         }
+                        connection.Close();
                     }
                 }
 

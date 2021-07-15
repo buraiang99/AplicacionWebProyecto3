@@ -137,6 +137,7 @@ namespace AplicacionWebProyecto3.Controllers
                     temp.FechaDiagnostico = vacunaReader["FECHA_DIAGNOSTICO"].ToString();
                     temp.Medicamentos = vacunaReader["MEDICAMENTOS"].ToString();
                 }
+                connection.Close();
                 return "<div class='row'>"
                     + "<div class='col-md-3' id='divid'>"
             + "<label for= 'inputEmail4' class='form-label'>ID</label>"

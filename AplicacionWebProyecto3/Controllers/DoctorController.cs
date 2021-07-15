@@ -74,10 +74,12 @@ namespace AplicacionWebProyecto3.Controllers
                     {
                         DoctorModel temp = new DoctorModel();
                         HttpContext.Session.SetString("Cedula",doctorReader["CEDULA"].ToString());
+                        connection.Close();
                         return View("Index");
                     }
                     else
                     {
+                        connection.Close();
                         return View();
                     }
                 };

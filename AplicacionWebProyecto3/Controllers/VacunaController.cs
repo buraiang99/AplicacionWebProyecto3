@@ -137,6 +137,7 @@ namespace AplicacionWebProyecto3.Controllers
                     temp.FechaAplicacion = vacunaReader["FECHA_APLICACION"].ToString();
                     temp.FechaProxima = vacunaReader["FECHA_PROXIMA"].ToString();
                 }
+                connection.Close();
                 return "<div class='row'>"
                     +"<div class='col-md-3' id='divid'>"
             + "<label for= 'inputEmail4' class='form-label'>Cedula Paciente</label>"
