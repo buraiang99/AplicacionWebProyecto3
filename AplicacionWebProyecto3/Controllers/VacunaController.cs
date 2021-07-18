@@ -21,8 +21,49 @@ namespace AplicacionWebProyecto3.Controllers
         }
         public IActionResult Registrar()
         {
+            List<AreaSaludModel> areaSaludList = ListarAreaSalud();
+            List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
+            {
+                return new SelectListItem()
+                {
+                    Text = areaSalud.Nombre.ToString(),
+                    Value = areaSalud.ID.ToString(),
+                    Selected = false
+                };
+            });
+
+            ViewBag.AreaSalud = selectListItems;
             return View();
         }
+        private List<AreaSaludModel> ListarAreaSalud()
+        {
+            List<AreaSaludModel> areaSaludList = new List<AreaSaludModel>();
+            if (ModelState.IsValid)
+            {
+                string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+                //var connection = new SqlConnection(conexionString);
+                using (SqlConnection connection = new SqlConnection(conexionString))
+                {
+                    string sqlQuery = $"exec sp_getAllCentroSalud";
+                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    {
+                        command.CommandType = CommandType.Text;
+                        connection.Open();
+                        SqlDataReader sqlDataReader = command.ExecuteReader();
+                        while (sqlDataReader.Read())
+                        {
+                            AreaSaludModel areaSalud = new AreaSaludModel();
+                            areaSalud.ID = Int32.Parse(sqlDataReader["ID"].ToString());
+                            areaSalud.Nombre = sqlDataReader["NOMBRE"].ToString();
+                            areaSaludList.Add(areaSalud);
+                        }
+                        connection.Close();
+                    }
+                }
+                return areaSaludList;
+            }
+            return null;
+        }// fin ListarAreaSalud
         public IActionResult VerVacunas()
         {
             List<VacunaModel> vacunas = new List<VacunaModel>();
@@ -66,7 +107,9 @@ namespace AplicacionWebProyecto3.Controllers
                 string sqlQuery = $"exec sp_insertarVacuna @param_CEDULA_PACIENTE = '{vacunaModel.CedulaPaciente}', " +
                     $"@param_NOMBRE_VACUNA = '{vacunaModel.NombreVacuna}', " +
                     $"@param_DESCRIPCION = '{vacunaModel.Descripcion}', " +
-                    $"@param_FECHA_APLICACION = '{vacunaModel.FechaAplicacion}', @param_FECHA_PROXIMA = '{vacunaModel.FechaProxima}'";
+                    $"@param_FECHA_APLICACION = '{vacunaModel.FechaAplicacion}'," +
+                    $"@param_FECHA_PROXIMA = '{vacunaModel.FechaProxima}'," +
+                    $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'";
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = CommandType.Text;

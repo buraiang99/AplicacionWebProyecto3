@@ -1,4 +1,7 @@
 ﻿@model AplicacionWebProyecto3.Models.VacunaModel
+@{
+    List<SelectListItem> areaSaludiItems = (List<SelectListItem>)ViewBag.AreaSalud;
+ }
 
 <form asp-action="Registrar" method="post">
     <div class="row">
@@ -26,6 +29,10 @@
             <input asp-for="FechaProxima" class="form-control" />
             <span asp-validation-for="FechaProxima" class="text-danger"></span>
         </div>
+    </div>
+    <div>
+        <label class="control-label">Area de Salud</label>
+        @Html.DropDownList("listaAreaSalud", areaSaludiItems, "Seleccione una opcion", new { @class = "form-control" })
     </div>
     <div class="col-12 w-auto mx-3 text-center my-3">
         <button type="submit" class="btn btn-primary text-center mt-3">Registrar</button>
