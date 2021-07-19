@@ -7,6 +7,6 @@ namespace AplicacionWebProyecto3.Models
 {
     public class SessionModel
     {
-        String VariableSession { get; set; }
+        String Cedula { get; set; }
     }
 }

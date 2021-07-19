@@ -109,7 +109,7 @@ namespace AplicacionWebProyecto3.Controllers
                     $"@param_DESCRIPCION = '{vacunaModel.Descripcion}', " +
                     $"@param_FECHA_APLICACION = '{vacunaModel.FechaAplicacion}'," +
                     $"@param_FECHA_PROXIMA = '{vacunaModel.FechaProxima}'," +
-                    $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaEspecialidad"].ToString())}'";
+                    $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaAreaSalud"].ToString())}'";
                 using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                 {
                     command.CommandType = CommandType.Text;

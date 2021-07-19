@@ -19,20 +19,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
+            <label class="control-label">Area de Salud</label>
+            @Html.DropDownList("listaAreaSalud", areaSaludiItems, "Seleccione una opcion", new { @class = "form-control" })
+        </div>
+        <div class="form-group col-md-4">
             <label asp-for="FechaAplicacion" class="control-label"></label>
             <input asp-for="FechaAplicacion" class="form-control" />
             <span asp-validation-for="FechaAplicacion" class="text-danger"></span>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label asp-for="FechaProxima" class="control-label"></label>
             <input asp-for="FechaProxima" class="form-control" />
             <span asp-validation-for="FechaProxima" class="text-danger"></span>
         </div>
-    </div>
-    <div>
-        <label class="control-label">Area de Salud</label>
-        @Html.DropDownList("listaAreaSalud", areaSaludiItems, "Seleccione una opcion", new { @class = "form-control" })
     </div>
     <div class="col-12 w-auto mx-3 text-center my-3">
         <button type="submit" class="btn btn-primary text-center mt-3">Registrar</button>
