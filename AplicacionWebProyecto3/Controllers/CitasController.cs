@@ -28,32 +28,43 @@ namespace AplicacionWebProyecto3.Controllers
 
         public IActionResult RegistrarCita()
         {
-            List<EspecialidadModel> especialidadList = ListarEspecialidad();
-            List<SelectListItem> selectListItemsEspec = especialidadList.ConvertAll(especialidadModel =>
+            //Console.WriteLine("afuera" + HttpContext.Session.GetString("Cedula"));
+            if (HttpContext.Session.GetString("Cedula") is null)
             {
-                return new SelectListItem()
-                {
-                    Text = especialidadModel.Nombre.ToString(),
-                    Value = especialidadModel.ID_Especialidad.ToString(),
-                    Selected = false
-                };
-            });
-
-            List<AreaSaludModel> areaSaludList = ListarAreaSalud();
-            List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
+                //Console.WriteLine("entro"+ HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
+            }
+            else
             {
-                return new SelectListItem()
+                List<EspecialidadModel> especialidadList = ListarEspecialidad();
+                List<SelectListItem> selectListItemsEspec = especialidadList.ConvertAll(especialidadModel =>
                 {
-                    Text = areaSalud.Nombre.ToString(),
-                    Value = areaSalud.ID.ToString(),
-                    Selected = false
-                };
-            });
+                    return new SelectListItem()
+                    {
+                        Text = especialidadModel.Nombre.ToString(),
+                        Value = especialidadModel.ID_Especialidad.ToString(),
+                        Selected = false
+                    };
+                });
+
+                List<AreaSaludModel> areaSaludList = ListarAreaSalud();
+                List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = areaSalud.Nombre.ToString(),
+                        Value = areaSalud.ID.ToString(),
+                        Selected = false
+                    };
+                });
 
 
-            ViewBag.AreaSalud = selectListItems;
-            ViewBag.Especialidad = selectListItemsEspec;
-            return View();
+                ViewBag.AreaSalud = selectListItems;
+                ViewBag.Especialidad = selectListItemsEspec;
+                return View();
+            }
+            
         }  // Fin RegistrarCita
 
         [HttpPost]
@@ -148,41 +159,50 @@ namespace AplicacionWebProyecto3.Controllers
         }// Fin ItemsEspecialidad
         public IActionResult Listar()
         {
-            List<CitasModel> listaCitas = new List<CitasModel>();
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("Cedula") is null)
             {
-                string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    string sqlQuery = $"exec sp_getAllCitas";
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
-                    {
-                        command.CommandType = CommandType.Text;
-                        connection.Open();
-                        SqlDataReader sqlDataReader = command.ExecuteReader();
-                        while (sqlDataReader.Read())
-                        {
-                            CitasModel citas = new CitasModel();
-                            citas.ID_Citas = Int32.Parse(sqlDataReader["ID"].ToString());
-                            citas.CedulaPaciente = sqlDataReader["CEDULA_PACIENTE"].ToString();
-                            citas.Fecha = sqlDataReader["FECHA"].ToString();
-                            //Console.WriteLine("----------------"+sqlDataReader["FECHA"].ToString());
-                            citas.Hora = sqlDataReader["HORA"].ToString();
-                            citas.CentroSalud = Int32.Parse(sqlDataReader["ID_CENTRO_SALUD"].ToString());
-                            citas.EspecialidadRequerida = Int32.Parse(sqlDataReader["ESPECIALIDAD"].ToString());
-                            citas.Descipcion = sqlDataReader["DESCRIPCION_DETALLADA"].ToString();
-                            listaCitas.Add(citas);
-                        }
-                        connection.Close();
-                    }
-                }
-
+                Console.WriteLine("entro" + HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
             }
-            ViewBag.Especialidades = ListarEspecialidad();
-            ViewBag.AreasSalud = ListarAreaSalud();
-            ViewBag.Citas = listaCitas;
-            return View();
+            else
+            {
+                List<CitasModel> listaCitas = new List<CitasModel>();
+                if (ModelState.IsValid)
+                {
+                    string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        string sqlQuery = $"exec sp_getAllCitas";
+                        using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                        {
+                            command.CommandType = CommandType.Text;
+                            connection.Open();
+                            SqlDataReader sqlDataReader = command.ExecuteReader();
+                            while (sqlDataReader.Read())
+                            {
+                                CitasModel citas = new CitasModel();
+                                citas.ID_Citas = Int32.Parse(sqlDataReader["ID"].ToString());
+                                citas.CedulaPaciente = sqlDataReader["CEDULA_PACIENTE"].ToString();
+                                citas.Fecha = sqlDataReader["FECHA"].ToString();
+                                //Console.WriteLine("----------------"+sqlDataReader["FECHA"].ToString());
+                                citas.Hora = sqlDataReader["HORA"].ToString();
+                                citas.CentroSalud = Int32.Parse(sqlDataReader["ID_CENTRO_SALUD"].ToString());
+                                citas.EspecialidadRequerida = Int32.Parse(sqlDataReader["ESPECIALIDAD"].ToString());
+                                citas.Descipcion = sqlDataReader["DESCRIPCION_DETALLADA"].ToString();
+                                listaCitas.Add(citas);
+                            }
+                            connection.Close();
+                        }
+                    }
+
+                }
+                ViewBag.Especialidades = ListarEspecialidad();
+                ViewBag.AreasSalud = ListarAreaSalud();
+                ViewBag.Citas = listaCitas;
+                return View();
+            }
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
 ﻿using AplicacionWebProyecto3.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -20,39 +21,58 @@ namespace AplicacionWebProyecto3.Controllers
         }
         public IActionResult Registrar()
         {
-            return View();
+            if (HttpContext.Session.GetString("Cedula") is null)
+            {
+                Console.WriteLine("entro" + HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
+            }
+            else
+            {
+                return View();
+            }
+                
         }
         public IActionResult VerAlergias()
         {
-            List<AlergiaModel> alergias = new List<AlergiaModel>();
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("Cedula") is null)
             {
-                string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                Console.WriteLine("entro" + HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
+            }
+            else
+            {
+                List<AlergiaModel> alergias = new List<AlergiaModel>();
+                if (ModelState.IsValid)
                 {
-                    string sqlQuery = $"exec sp_getAllAlergias";
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        command.CommandType = CommandType.Text;
-                        connection.Open();
-                        SqlDataReader productosReader = command.ExecuteReader();
-                        while (productosReader.Read())
+                        string sqlQuery = $"exec sp_getAllAlergias";
+                        using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                         {
-                            AlergiaModel temp = new AlergiaModel();
-                            temp.IDAlergia = Int32.Parse(productosReader["ID"].ToString());
-                            temp.CedulaPaciente = productosReader["CEDULA_PACIENTE"].ToString();
-                            temp.NombreAlergia = productosReader["NOMBRE_ALERGIA"].ToString();
-                            temp.Descripcion = productosReader["DESCRIPCION"].ToString();
-                            temp.FechaDiagnostico = productosReader["FECHA_DIAGNOSTICO"].ToString();
-                            temp.Medicamentos = productosReader["MEDICAMENTOS"].ToString();
-                            alergias.Add(temp);
-                        } // while
-                        connection.Close();
+                            command.CommandType = CommandType.Text;
+                            connection.Open();
+                            SqlDataReader productosReader = command.ExecuteReader();
+                            while (productosReader.Read())
+                            {
+                                AlergiaModel temp = new AlergiaModel();
+                                temp.IDAlergia = Int32.Parse(productosReader["ID"].ToString());
+                                temp.CedulaPaciente = productosReader["CEDULA_PACIENTE"].ToString();
+                                temp.NombreAlergia = productosReader["NOMBRE_ALERGIA"].ToString();
+                                temp.Descripcion = productosReader["DESCRIPCION"].ToString();
+                                temp.FechaDiagnostico = productosReader["FECHA_DIAGNOSTICO"].ToString();
+                                temp.Medicamentos = productosReader["MEDICAMENTOS"].ToString();
+                                alergias.Add(temp);
+                            } // while
+                            connection.Close();
+                        }
                     }
                 }
+                ViewBag.Alergias = alergias;
+                return View();
             }
-            ViewBag.Alergias = alergias;
-            return View();
         }
 
         [HttpPost]

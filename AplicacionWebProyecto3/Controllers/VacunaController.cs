@@ -1,4 +1,5 @@
 ﻿using AplicacionWebProyecto3.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
@@ -21,19 +22,28 @@ namespace AplicacionWebProyecto3.Controllers
         }
         public IActionResult Registrar()
         {
-            List<AreaSaludModel> areaSaludList = ListarAreaSalud();
-            List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
+            if (HttpContext.Session.GetString("Cedula") is null)
             {
-                return new SelectListItem()
+                Console.WriteLine("entro" + HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
+            }
+            else {
+                List<AreaSaludModel> areaSaludList = ListarAreaSalud();
+                List<SelectListItem> selectListItems = areaSaludList.ConvertAll(areaSalud =>
                 {
-                    Text = areaSalud.Nombre.ToString(),
-                    Value = areaSalud.ID.ToString(),
-                    Selected = false
-                };
-            });
+                    return new SelectListItem()
+                    {
+                        Text = areaSalud.Nombre.ToString(),
+                        Value = areaSalud.ID.ToString(),
+                        Selected = false
+                    };
+                });
 
-            ViewBag.AreaSalud = selectListItems;
-            return View();
+                ViewBag.AreaSalud = selectListItems;
+                return View();
+            }
+               
         }
         private List<AreaSaludModel> ListarAreaSalud()
         {
@@ -66,35 +76,45 @@ namespace AplicacionWebProyecto3.Controllers
         }// fin ListarAreaSalud
         public IActionResult VerVacunas()
         {
-            List<VacunaModel> vacunas = new List<VacunaModel>();
-            if (ModelState.IsValid)
+            if (HttpContext.Session.GetString("Cedula") is null)
             {
-                string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                Console.WriteLine("entro" + HttpContext.Session.GetString("Cedula"));
+                ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
+                return View("Index");
+            }
+            else
+            {
+                List<VacunaModel> vacunas = new List<VacunaModel>();
+                if (ModelState.IsValid)
                 {
-                    string sqlQuery = $"exec sp_getAllVacunas";
-                    using (SqlCommand command = new SqlCommand(sqlQuery, connection))
+                    string connectionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        command.CommandType = CommandType.Text;
-                        connection.Open();
-                        SqlDataReader productosReader = command.ExecuteReader();
-                        while (productosReader.Read())
+                        string sqlQuery = $"exec sp_getAllVacunas";
+                        using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                         {
-                            VacunaModel temp = new VacunaModel();
-                            temp.IDVacuna = Int32.Parse(productosReader["ID"].ToString());
-                            temp.CedulaPaciente = productosReader["CEDULA_PACIENTE"].ToString();
-                            temp.NombreVacuna = productosReader["NOMBRE_VACUNA"].ToString();
-                            temp.Descripcion = productosReader["DESCRIPCION"].ToString();
-                            temp.FechaAplicacion = productosReader["FECHA_APLICACION"].ToString();
-                            temp.FechaProxima = productosReader["FECHA_PROXIMA"].ToString();
-                            vacunas.Add(temp);
-                        } // while
-                        connection.Close();
+                            command.CommandType = CommandType.Text;
+                            connection.Open();
+                            SqlDataReader productosReader = command.ExecuteReader();
+                            while (productosReader.Read())
+                            {
+                                VacunaModel temp = new VacunaModel();
+                                temp.IDVacuna = Int32.Parse(productosReader["ID"].ToString());
+                                temp.CedulaPaciente = productosReader["CEDULA_PACIENTE"].ToString();
+                                temp.NombreVacuna = productosReader["NOMBRE_VACUNA"].ToString();
+                                temp.Descripcion = productosReader["DESCRIPCION"].ToString();
+                                temp.FechaAplicacion = productosReader["FECHA_APLICACION"].ToString();
+                                temp.FechaProxima = productosReader["FECHA_PROXIMA"].ToString();
+                                vacunas.Add(temp);
+                            } // while
+                            connection.Close();
+                        }
                     }
                 }
+                ViewBag.Vacunas = vacunas;
+                return View();
             }
-            ViewBag.Vacunas = vacunas;
-            return View();
+                
         }
         [HttpPost]
         public IActionResult Registrar(VacunaModel vacunaModel)
