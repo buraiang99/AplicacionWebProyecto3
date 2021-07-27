@@ -8,6 +8,7 @@ namespace AplicacionWebProyecto3.Models
 {
     public class CitasModel
     {
+        [Display(Name = "ID Cita")]
         public int ID_Citas { get; set; }
 
         [Required(ErrorMessage = "La {0} es requerido")]
@@ -15,7 +16,11 @@ namespace AplicacionWebProyecto3.Models
         [StringLength(9, ErrorMessage = "La {0} de tener al menos {2} digitos", MinimumLength = 9)]
         [Display(Name = "Cedula")]
         public string CedulaPaciente { get; set; }
+
+        [Display(Name ="Centro de Salud")]
         public int CentroSalud { get; set; }
+
+        [Display(Name = "Especialidad Requerida")]
         public int EspecialidadRequerida { get; set; }
 
         [Required(ErrorMessage = "{0} es requerida")]

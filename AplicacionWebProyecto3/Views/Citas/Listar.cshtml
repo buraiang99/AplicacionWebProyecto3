@@ -4,79 +4,69 @@
     ViewData["Title"] = "Listar";
 }
 
-<h1>Listar</h1>
+<h1>Lista de Citas</h1>
 
 <p>
     <a asp-controller="Citas" asp-action="RegistrarCita">Registrar nueva cita</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID_Citas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CedulaPaciente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CentroSalud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EspecialidadRequerida)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hora)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descipcion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (CitasModel item in ViewBag.Citas) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID_Citas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CedulaPaciente)
-            </td>
-            <td>
-                @foreach (AreaSaludModel areaSalud in ViewBag.AreasSalud)
-                {
-                    if (areaSalud.ID == item.CentroSalud)
-                    {
-                        @Html.DisplayFor(modelItem => areaSalud.Nombre)
-                    }
-                }
-            </td>
-            <td>
-                @foreach (EspecialidadModel especialidad in ViewBag.Especialidades)
-                {
-                    if (especialidad.ID_Especialidad == item.EspecialidadRequerida)
-                    {
-                        @Html.DisplayFor(modelItem => especialidad.Nombre)
-                    }
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hora)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descipcion)
-            </td>
-            <td>
-                <a asp-controller="Citas" asp-action="BuscarCita" asp-route-id="@item.ID_Citas">Editar Diagnostico</a>
-                @Html.ActionLink("Eliminar Cita", "Eliminar", new { id=item.ID_Citas })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-light table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cedula</th>
+                <th>Centro de salud</th>
+                <th>Especialidad</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Descipcion</th>
+                <th>Eliminar y Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CitasModel item in ViewBag.Citas)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_Citas)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CedulaPaciente)
+                    </td>
+                    <td>
+                        @foreach (AreaSaludModel areaSalud in ViewBag.AreasSalud)
+                        {
+                            if (areaSalud.ID == item.CentroSalud)
+                            {
+                                @Html.DisplayFor(modelItem => areaSalud.Nombre)
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (EspecialidadModel especialidad in ViewBag.Especialidades)
+                        {
+                            if (especialidad.ID_Especialidad == item.EspecialidadRequerida)
+                            {
+                                @Html.DisplayFor(modelItem => especialidad.Nombre)
+                            }
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Hora)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descipcion)
+                    </td>
+                    <td>
+                        <a asp-controller="Citas" asp-action="BuscarCita" asp-route-id="@item.ID_Citas">Editar Diagnostico</a> |
+                        <a asp-controller="Citas" asp-action="Eliminar" asp-route-id="@item.ID_Citas">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

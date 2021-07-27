@@ -28,10 +28,8 @@ namespace AplicacionWebProyecto3.Controllers
 
         public IActionResult RegistrarCita()
         {
-            //Console.WriteLine("afuera" + HttpContext.Session.GetString("Cedula"));
             if (HttpContext.Session.GetString("Cedula") is null)
             {
-                //Console.WriteLine("entro"+ HttpContext.Session.GetString("Cedula"));
                 ViewData["Mensaje"] = "Debes de iniciar sesion para continuar";
                 return View("Index");
             }
@@ -70,11 +68,6 @@ namespace AplicacionWebProyecto3.Controllers
         [HttpPost]
         public IActionResult RegistrarCita(CitasModel citasModel)
         {
-            /*Console.WriteLine("Cedula: " + citasModel.CedulaPaciente);
-            Console.WriteLine(citasModel.Fecha + " " + citasModel.Hora);
-            Console.WriteLine("comboEspecialidad" + Request.Form["listaEspecialidad"].ToString());
-            Console.WriteLine("comboArea" + Request.Form["listaAreaSalud"].ToString());
-            Console.WriteLine("Sesion: "+ HttpContext.Session.GetString("Cedula"));*/
             if (ModelState.IsValid)
             {
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
@@ -82,7 +75,6 @@ namespace AplicacionWebProyecto3.Controllers
 
                 var fechatemp = citasModel.Fecha + " " + citasModel.Hora;
 
-                //Console.WriteLine(fechatemp);
                 string sqlQuery = $"exec sp_insertarCita @param_CEDULA_PACIENTE = '{citasModel.CedulaPaciente}'," +
                     $"@param_ID_CENTRO_SALUD = '{Convert.ToInt32(Request.Form["listaAreaSalud"].ToString())}', " +
                     $"@param_FECHA_HORA_CITA = '{fechatemp}'," +
@@ -105,7 +97,6 @@ namespace AplicacionWebProyecto3.Controllers
             if (ModelState.IsValid)
             {
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-                //var connection = new SqlConnection(conexionString);
                 using (SqlConnection connection = new SqlConnection(conexionString))
                 {
                     string sqlQuery = $"exec sp_getAllCentroSalud";
@@ -134,7 +125,6 @@ namespace AplicacionWebProyecto3.Controllers
             if (ModelState.IsValid)
             {
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
-                //var connection = new SqlConnection(conexionString);
                 using (SqlConnection connection = new SqlConnection(conexionString))
                 {
                     string sqlQuery = $"exec sp_getAllEspecialidad";
@@ -186,7 +176,6 @@ namespace AplicacionWebProyecto3.Controllers
                                 citas.ID_Citas = Int32.Parse(sqlDataReader["ID"].ToString());
                                 citas.CedulaPaciente = sqlDataReader["CEDULA_PACIENTE"].ToString();
                                 citas.Fecha = sqlDataReader["FECHA"].ToString();
-                                //Console.WriteLine("----------------"+sqlDataReader["FECHA"].ToString());
                                 citas.Hora = sqlDataReader["HORA"].ToString();
                                 citas.CentroSalud = Int32.Parse(sqlDataReader["ID_CENTRO_SALUD"].ToString());
                                 citas.EspecialidadRequerida = Int32.Parse(sqlDataReader["ESPECIALIDAD"].ToString());
@@ -209,7 +198,6 @@ namespace AplicacionWebProyecto3.Controllers
         [Route("controller/accion/{id}")]
         public IActionResult BuscarCita(int id)
         {
-            //Console.WriteLine("---------------------"+id);
             CitasModel citasModel = new CitasModel();
             if (ModelState.IsValid)
             {
@@ -246,15 +234,12 @@ namespace AplicacionWebProyecto3.Controllers
             ViewBag.Especialidades = ListarEspecialidad();
             ViewBag.AreasSalud = ListarAreaSalud();
             ViewBag.Cita = citasModel;
-            //Console.WriteLine("----------------------------"+citasModel.Fecha);
             return View("Actualizar", citasModel);
         }// fin Actualizar
 
         [HttpPost]
         public IActionResult Actualizar(CitasModel citasModel)
         {
-            //Console.WriteLine("-------------------ID: "+citasModel.ID_Citas);
-            //Console.WriteLine("-------------------Descipcion: " + citasModel.Descipcion);
             if (ModelState.IsValid)
             {
                 string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
@@ -275,7 +260,6 @@ namespace AplicacionWebProyecto3.Controllers
 
         public IActionResult Eliminar(int id)
         {
-            //Console.WriteLine(id);
             string conexionString = Configuration["ConnectionStrings:DB_Connection_Turrialba"];
             var connection = new SqlConnection(conexionString);
 

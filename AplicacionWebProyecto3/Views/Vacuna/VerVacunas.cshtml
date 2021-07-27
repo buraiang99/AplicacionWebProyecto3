@@ -2,11 +2,14 @@
 @{
     ViewData["Title"] = "Ver Vacunas";
 }
+
+<h1>Lista de Vacunas</h1>
 <form asp-action="Update" method="post">
     <div id="info" class="text-center">
 
     </div>
 </form>
+<div class="table-responsive">
     <table class="table table-light table-hover">
         <tr>
             <th>ID</th>
@@ -26,9 +29,13 @@
                 <td>@temp.Descripcion</td>
                 <td>@temp.FechaAplicacion</td>
                 <td>@temp.FechaProxima</td>
-                <td><a type="button" href="javascript:;" onclick="actualizarVacuna(@temp.IDVacuna); return false;">Actualizar</a>
-                |
-                <a type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;">Eliminar</a></td>
+                <td>
+                    <a type="button" href="javascript:;" onclick="actualizarVacuna(@temp.IDVacuna); return false;">Actualizar</a>
+                    |
+                    <a type="button" href="javascript:;" onclick="eliminarVacuna(@temp.IDVacuna); return false;">Eliminar</a>
+                </td>
             </tr>
         }
     </table>
+</div>
+    

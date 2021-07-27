@@ -2,35 +2,39 @@
 @{
     ViewData["Title"] = "Ver Alergias";
 }
+<h1>Lista de Alergias</h1>
 <form asp-action="Update" method="post">
     <div id="info" class="text-center">
 
     </div>
 </form>
-<table class="table table-light table-hover">
-    <tr>
-        <th>ID</th>
-        <th>Cedula paciente</th>
-        <th>Nombre</th>
-        <th>Descripcion</th>
-        <th>Diagnostico</th>
-        <th>Medicamentos</th>
-        <th>Acciones</th>
-    </tr>
-    @foreach (AlergiaModel temp in ViewBag.Alergias)
-    {
+<div class="table-responsive">
+    <table class="table table-light table-hover">
         <tr>
-            <td>@temp.IDAlergia</td>
-            <td>@temp.CedulaPaciente</td>
-            <td>@temp.NombreAlergia</td>
-            <td>@temp.Descripcion</td>
-            <td>@temp.FechaDiagnostico</td>
-            <td>@temp.Medicamentos</td>
-            <td>
-                <a type="button" href="javascript:;" onclick="actualizarAlergia(@temp.IDAlergia); return false;">Actualizar</a>
-                |
-                <a type="button" href="javascript:;" onclick="eliminarAlergia(@temp.IDAlergia); return false;">Eliminar</a>
-            </td>
+            <th>ID</th>
+            <th>Cedula paciente</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Diagnostico</th>
+            <th>Medicamentos</th>
+            <th>Acciones</th>
         </tr>
-    }
-</table>
+        @foreach (AlergiaModel temp in ViewBag.Alergias)
+        {
+            <tr>
+                <td>@temp.IDAlergia</td>
+                <td>@temp.CedulaPaciente</td>
+                <td>@temp.NombreAlergia</td>
+                <td>@temp.Descripcion</td>
+                <td>@temp.FechaDiagnostico</td>
+                <td>@temp.Medicamentos</td>
+                <td>
+                    <a type="button" href="javascript:;" onclick="actualizarAlergia(@temp.IDAlergia); return false;">Actualizar</a>
+                    |
+                    <a type="button" href="javascript:;" onclick="eliminarAlergia(@temp.IDAlergia); return false;">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
